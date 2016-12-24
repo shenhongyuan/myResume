@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="css/reset.min.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script>
+        var desW=640;
+        var winW=document.documentElement.clientWidth;
+        document.documentElement.style.fontSize=winW/desW*100+'px';
+    </script>
+</head>
+<body>
+    <section class="main">
+        <section class="music">
+            <audio src="audio/beyond.mp3" id="beyond"></audio>
+            <!--controls 显示用户操作界面
+            autoplay   自动播放
+            loop  循环播放
+            preload:auto 预加载音频文件
+                    netadata 只加载
+
+
+               play();        音乐播放
+               pause();       停止
+               paused 判断是否播放状态  true停止  false播放;
+            -->
+
+        </section>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide slide1 ">
+                    <img src="img/swiper/page1-text1.png" alt="">
+                    <img src="img/swiper/page1-text2.png" alt="">
+                    <img src="img/swiper/page1-text3.png" alt="">
+                    <img src="img/swiper/page1-text4.png" alt="">
+                </div>
+                <div class="swiper-slide slide2">
+                    <img src="img/swiper/page2-text1.png" alt="">
+                    <img src="img/swiper/page2-text2.png" alt="">
+                    <img src="img/swiper/page2-text3.png" alt="">
+                    <img src="img/swiper/page2-text4.png" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+<script src="js/swiper.min.js"></script>
+<script>
+    var mySwiper= new Swiper(".swiper-container",{
+        direction:"vertical",
+        loop:true,
+        onTransitionEnd:function (swiper) {
+            var curIndex=swiper.activeIndex;
+            var slides=swiper.slides;
+            [].forEach.call(slides,function (item,index) {
+                item.id='';
+                if(index==curIndex){
+//                    slides[curIndex].id='page'+(curIndex+1);
+                    switch (index){
+                        case 0:
+                            item.id='page'+(slides.length-2);
+                            break;
+                        case slides.length-1:
+                            item.id='page1'
+                            break;
+                        default:
+                            item.id='page'+index;
+                    }
+                };
+            })
+
+        },
+       /* onInit:function (swiper) {
+            var slides=swiper.slides;
+            slides[0].id='page1';
+        }*/
+    })
+    var music= document.querySelector('.music');
+    var beyond=document.querySelector('#beyond');
+    window.setTimeout(function () {
+        music.style.opacity=1;
+        beyond.play();
+        music.className='music musicMove';
+    },1000);
+    music.addEventListener('click',function () {
+        if(beyond.paused){
+            beyond.play();
+            music.className='music musicMove';
+        }else {
+            beyond.pause();
+            music.className='music';
+        }
+    },false)
+</script>
